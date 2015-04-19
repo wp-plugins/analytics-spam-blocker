@@ -10,7 +10,7 @@ License: GPLv2
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'Analytics Spam Blocker' ) ) :
+if ( ! class_exists( 'AnalyticsSpamBlocker' ) ) :
 
 	class AnalyticsSpamBlocker {
 
