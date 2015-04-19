@@ -61,7 +61,7 @@ if ( ! class_exists( 'AnalyticsSpamBlocker' ) ) :
 		}
 	}
 
-	register_activation_hook ( __FILE__, array( 'Analytics Spam Blocker', 'enable' ) );
-	register_deactivation_hook ( __FILE__, array( 'Analytics Spam Blocker', 'disable' ) );
+	register_activation_hook ( __FILE__, array( 'AnalyticsSpamBlocker', 'enable' ) );
+	register_deactivation_hook ( __FILE__, array( 'AnalyticsSpamBlocker', 'disable' ) );
 
 endif;
