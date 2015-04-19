@@ -10,9 +10,9 @@ License: GPLv2
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'AnalyticsSpamBlocker' ) ) :
+if ( ! class_exists( 'EasySpam' ) ) :
 
-	class AnalyticsSpamBlocker {
+	class EasySpam {
 
 		static function enable () {
 			include_once ( ABSPATH . '/wp-admin/includes/misc.php' );
@@ -50,18 +50,18 @@ if ( ! class_exists( 'AnalyticsSpamBlocker' ) ) :
 			$rules .= "RewriteRule (.*) http://www.make-money-online.7makemoneyonline.com [R=301,L]";
 			
 			$rules = explode ( "\n", $rules );
-			insert_with_markers( $htaccess_file, 'Analytics Spam Blocker', $rules );
+			insert_with_markers( $htaccess_file, 'EasySpam Blocker', $rules );
 		}
 
 		static function disable () {
 			include_once ( ABSPATH . '/wp-admin/includes/misc.php' );
 			$htaccess_file =  ABSPATH . '.htaccess';
 
-			insert_with_markers ( $htaccess_file, 'Analytics Spam Blocker', '' );
+			insert_with_markers ( $htaccess_file, 'EasySpam Blocker', '' );
 		}
 	}
 
-	register_activation_hook ( __FILE__, array( 'AnalyticsSpamBlocker', 'enable' ) );
-	register_deactivation_hook ( __FILE__, array( 'AnalyticsSpamBlocker', 'disable' ) );
+	register_activation_hook ( __FILE__, array( 'EasySpam', 'enable' ) );
+	register_deactivation_hook ( __FILE__, array( 'EasySpam', 'disable' ) );
 
 endif;
