@@ -2,7 +2,7 @@
 /*
 Plugin Name: Analytics Spam Blocker
 Description: This plugin blocks spam sites like semalt.com and buttons-for-website.com from reaching your website and affecting your Google Analytics statistics.
-Version: 1.0
+Version: 1.1
 Author: Luke Williamson
 Author URI: http://lukewilliamson.com.au
 License: GPLv2
@@ -45,6 +45,9 @@ if ( ! class_exists( 'AnalyticsSpamBlocker' ) ) :
 			
 			$rules .= "RewriteCond %{HTTP_REFERER} ^http://www1.([^.]+\.)*social-buttons\.com [NC]\n";
 			$rules .= "RewriteRule (.*) http://www1.social-buttons.com [R=301,L]\n";
+			
+			$rules .= "RewriteCond %{HTTP_REFERER} ^http://www.([^.]+\.)*googlsucks\.com [NC]\n";
+			$rules .= "RewriteRule (.*) http://www.googlsucks.com [R=301,L]\n";
 			
 			$rules .= "RewriteCond %{HTTP_REFERER} ^http://www.([^.]+\.)*make-money-online.7makemoneyonline\.com [NC]\n";
 			$rules .= "RewriteRule (.*) http://www.make-money-online.7makemoneyonline.com [R=301,L]";
