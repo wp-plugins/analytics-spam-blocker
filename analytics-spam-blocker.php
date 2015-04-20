@@ -43,13 +43,13 @@ if ( ! class_exists( 'AnalyticsSpamBlocker' ) ) :
 			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*anticrawler\.org [NC]\n";
 			$rules .= "RewriteRule (.*) http://www.anticrawler.org [R=301,L]\n";
 			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://www.([^.]+\.)*googlsucks\.com [NC]\n";
+			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*googlsucks\.com [NC]\n";
 			$rules .= "RewriteRule (.*) http://www.googlsucks.com [R=301,L]\n";
 			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://www.([^.]+\.)*make-money-online.7makemoneyonline\.com [NC]\n";
+			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*make-money-online.7makemoneyonline\.com [NC]\n";
 			$rules .= "RewriteRule (.*) http://www.make-money-online.7makemoneyonline.com [R=301,L]\n";
             
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://www1.([^.]+\.)*social-buttons\.com [NC]\n";
+            $rules .= "RewriteCond %{HTTP_REFERER} ^http://.([^.]+\.)*social-buttons\.com [NC]\n";
 			$rules .= "RewriteRule (.*) http://www1.social-buttons.com [R=301,L]\n";
             
             $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*youporn-forum\.ga [NC]\n";
@@ -95,7 +95,8 @@ if ( ! class_exists( 'AnalyticsSpamBlocker' ) ) :
             $rules .= "RewriteRule (.*) http://www.editors.choice61797376.hulfingtonpost.com [R=301,L]\n";
 
             $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*editors.choice61675363.hulfingtonpost\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.editors.choice61675363.hulfingtonpost.com [R=301,L]\n";
+            $rules .= "RewriteRule (.*) http://www.editors.choice61675363.hulfingtonpost.com [R=301,L]";
+			//Last line entry never contains \n before the closing "
 			
 			$rules = explode ( "\n", $rules );
 			insert_with_markers( $htaccess_file, 'Analytics Spam Blocker', $rules );
