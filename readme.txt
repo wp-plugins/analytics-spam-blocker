@@ -20,7 +20,7 @@ Please deactivate this plugin before removing it from your website (otherwise yo
 == Installation ==
 1. Upload the `analytics-spam-blocker` plugin folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the \'Plugins\' menu in WordPress
-3. That\'s it!
+3. That's it!
 
 
 
