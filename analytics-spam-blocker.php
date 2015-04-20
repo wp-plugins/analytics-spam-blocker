@@ -49,8 +49,8 @@ if ( ! class_exists( 'AnalyticsSpamBlocker' ) ) :
 			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*make-money-online.7makemoneyonline\.com [NC]\n";
 			$rules .= "RewriteRule (.*) http://www.make-money-online.7makemoneyonline.com [R=301,L]\n";
             
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://.([^.]+\.)*social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www1.social-buttons.com [R=301,L]\n";
+            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*social-buttons\.com [NC]\n";
+			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
             
             $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*youporn-forum\.ga [NC]\n";
             $rules .= "RewriteRule (.*) http://www.youporn-forum.ga [R=301,L]\n";
