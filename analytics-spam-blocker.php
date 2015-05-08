@@ -2,7 +2,7 @@
 /*
 Plugin Name: Analytics Spam Blocker
 Description: This plugin blocks spam sites like semalt.com and buttons-for-website.com from reaching your website and affecting your Google Analytics statistics.
-Version: 1.2
+Version: 1.3
 Author: Luke Williamson
 Author URI: http://lukewilliamson.com.au
 License: GPLv2
@@ -10,13 +10,39 @@ License: GPLv2
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+
+
+// if (!defined('ANALYTICS_SPAM_BLOCKER_VERSION_NUM'))
+//     define('ANALYTICS_SPAM_BLOCKER_VERSION_NUM', '1.2');
+
 if ( ! class_exists( 'AnalyticsSpamBlocker' ) ) :
 
+	if (!defined('ANALYTICS_SPAM_BLOCKER_VERSION_KEY'))
+    	define('ANALYTICS_SPAM_BLOCKER_VERSION_KEY', 'analytics_spam_blocker_version');
+
 	class AnalyticsSpamBlocker {
+
+		static function init()
+		{
+			$currentVersion = analytics_spam_blocker_plugin_version();
+
+			$storedVersion = get_option(ANALYTICS_SPAM_BLOCKER_VERSION_KEY, '0');
+
+			if ( $currentVersion != $storedVersion)
+			{
+				AnalyticsSpamBlocker::disable();
+				AnalyticsSpamBlocker::enable();
+				add_option(ANALYTICS_SPAM_BLOCKER_VERSION_KEY, $currentVersion);
+			}
+		}
+
 
 		static function enable () {
 			include_once ( ABSPATH . '/wp-admin/includes/misc.php' );
 			$htaccess_file =  ABSPATH . '.htaccess';
+
+			$version = analytics_spam_blocker_plugin_version();
+			add_option(ANALYTICS_SPAM_BLOCKER_VERSION_KEY, $version);
 
 			$rules = "RewriteEngine on\n";
 			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*semalt\.com [NC]\n";
@@ -188,5 +214,22 @@ if ( ! class_exists( 'AnalyticsSpamBlocker' ) ) :
 
 	register_activation_hook ( __FILE__, array( 'AnalyticsSpamBlocker', 'enable' ) );
 	register_deactivation_hook ( __FILE__, array( 'AnalyticsSpamBlocker', 'disable' ) );
+	register_uninstall_hook(__FILE__, array('AnalyticsSpamBlocker', 'uninstall'));
+
+	add_action('init',  array('AnalyticsSpamBlocker', 'init'));
+
+	register_uninstall_hook(__DIR__ . '/uninstall.php', array());
+
+
+function analytics_spam_blocker_plugin_version() {
+  if(!function_exists('get_plugin_data')) {
+    require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+  }
+  $plugin_data = get_plugin_data(__FILE__);
+  return $plugin_data['Version'];
+}
+
 
 endif;
+
+
