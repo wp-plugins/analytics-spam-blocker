@@ -3,8 +3,8 @@ Contributors: Luke Williamson
 Tags: analytics spam, analytics, spam, analytics block, block google spam, google spam
 Donate link: http://lukewilliamson.com.au
 Requires at least: 1.0
-Tested up to: 4.2
-Stable tag: 1.3
+Tested up to: 4.2.2
+Stable tag: 1.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
