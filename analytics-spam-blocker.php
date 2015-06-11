@@ -2,7 +2,7 @@
 /*
 Plugin Name: Analytics Spam Blocker
 Description: This plugin blocks spam sites like semalt.com and buttons-for-website.com from reaching your website and affecting your Google Analytics statistics.
-Version: 1.4
+Version: 1.5
 Author: Luke Williamson
 Author URI: http://lukewilliamson.com.au
 License: GPLv2
@@ -195,136 +195,6 @@ if ( ! class_exists( 'AnalyticsSpamBlocker' ) ) :
             $rules .= "RewriteRule (.*) http://www.bestwebsitesawards.com [R=301,L]\n";
 			
 			//Update 2.2 - 29/04/2015 [End]
-			
-			//Update 2.3 - 10/06/2015 [Start]
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*simple-share-buttons\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.simple-share-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site25.simple-share-buttons\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.site25.simple-share-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site38.simple-share-buttons\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.site38.simple-share-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site33.simple-share-buttons\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.site33.simple-share-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site4.free-share-buttons\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.site4.free-share-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*forum.topic60478042.darodar\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.forum.topic60478042.darodar.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site11.simple-share-buttons\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.site11.simple-share-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*editors.choice60478042.hulfingtonpost\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.editors.choice60478042.hulfingtonpost.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*buy-cheap-online\.info [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.buy-cheap-online.info [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*sitesboard\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.sitesboard.com [R=301,L]\n";
-			
-			//Social Buttons Block Attempt [Start]
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site10.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site11.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site12.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site13.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site14.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site15.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site16.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site17.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site18.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site19.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site20.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site21.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site22.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site23.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site24.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site25.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site26.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site27.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site28.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site29.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site30.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site31.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site32.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site33.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site34.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site35.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site36.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site37.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site38.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site39.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*site40.social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-			
-			//Social Buttons Block Attempt [End]
-			
-			//Update 2.3 - 10/06/2015 [End]
 
             $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*editors.choice61675363.hulfingtonpost\.com [NC]\n";
             $rules .= "RewriteRule (.*) http://www.editors.choice61675363.hulfingtonpost.com [R=301,L]";
