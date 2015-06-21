@@ -2,7 +2,7 @@
 /*
 Plugin Name: Analytics Spam Blocker
 Description: This plugin blocks spam sites like semalt.com and buttons-for-website.com from reaching your website and affecting your Google Analytics statistics.
-Version: 1.6
+Version: 1.6.1
 Author: Luke Williamson
 Author URI: http://lukewilliamson.com.au
 License: GPLv2
@@ -27,6 +27,7 @@ function AnalyticsSpamBlockerActivate()
 			$lines[] = "\n# Analytics Spam Blocker - Start\n";
 			$lines[] = "SetEnvIfNoCase Referer semalt.com spambot=yes\n";
 			$lines[] = "SetEnvIfNoCase Referer darodar.com spambot=yes\n";
+			$lines[] = "SetEnvIfNoCase Referer buttons-for-website.com spambot=yes\n";
 			$lines[] = "Order allow,deny\n";
 			$lines[] = "Allow from all\n";
 			$lines[] = "Deny from env=spambot\n";
@@ -43,6 +44,7 @@ function AnalyticsSpamBlockerActivate()
 			fwrite($fp, "# Analytics Spam Blocker - Start\n");
 			fwrite($fp,"SetEnvIfNoCase Referer semalt.com spambot=yes\n");
 			fwrite($fp,"SetEnvIfNoCase Referer darodar.com spambot=yes\n");
+			fwrite($fp,"SetEnvIfNoCase Referer buttons-for-website.com spambot=yes\n");
 			fwrite($fp,"Order allow,deny\n");
 			fwrite($fp,"Allow from all\n");
 			fwrite($fp,"Deny from env=spambot\n");
