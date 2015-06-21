@@ -4,7 +4,7 @@ Tags: analytics spam, analytics, spam, analytics block, block google spam, googl
 Donate link: http://lukewilliamson.com.au
 Requires at least: 1.0
 Tested up to: 4.2
-Stable tag: 1.6.1
+Stable tag: 1.7
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
