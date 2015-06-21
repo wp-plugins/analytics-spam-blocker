@@ -2,234 +2,111 @@
 /*
 Plugin Name: Analytics Spam Blocker
 Description: This plugin blocks spam sites like semalt.com and buttons-for-website.com from reaching your website and affecting your Google Analytics statistics.
-Version: 1.5
+Version: 1.6
 Author: Luke Williamson
 Author URI: http://lukewilliamson.com.au
 License: GPLv2
 */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined('ABSPATH') or die("No script kiddies please!");
+
+register_activation_hook( __FILE__, 'AnalyticsSpamBlockerActivate' );
+register_deactivation_hook( __FILE__, 'AnalyticsSpamBlockerDeactivate' );
 
 
-
-// if (!defined('ANALYTICS_SPAM_BLOCKER_VERSION_NUM'))
-//     define('ANALYTICS_SPAM_BLOCKER_VERSION_NUM', '1.2');
-
-if ( ! class_exists( 'AnalyticsSpamBlocker' ) ) :
-
-	if (!defined('ANALYTICS_SPAM_BLOCKER_VERSION_KEY'))
-    	define('ANALYTICS_SPAM_BLOCKER_VERSION_KEY', 'analytics_spam_blocker_version');
-
-	class AnalyticsSpamBlocker {
-
-		static function init()
-		{
-			$currentVersion = analytics_spam_blocker_plugin_version();
-
-			$storedVersion = get_option(ANALYTICS_SPAM_BLOCKER_VERSION_KEY, '0');
-
-			if ( $currentVersion != $storedVersion)
-			{
-				AnalyticsSpamBlocker::disable();
-				AnalyticsSpamBlocker::enable();
-				add_option(ANALYTICS_SPAM_BLOCKER_VERSION_KEY, $currentVersion);
+function AnalyticsSpamBlockerActivate()
+{
+	$home_path = get_home_path();
+	$parsed_url = parse_url(site_url());
+	if ( ( ! file_exists( $home_path.'.htaccess' ) && is_writable( $home_path ) ) || is_writable( $home_path . '.htaccess' ) ) {
+		// We can make our changes
+		if(file_exists( $home_path.'.htaccess' )){
+			// Edit File
+			$lines = file($home_path.'.htaccess');			
+			//$lines[] = "\n";
+			$lines[] = "\n# Analytics Spam Blocker - Start\n";
+			$lines[] = "SetEnvIfNoCase Referer semalt.com spambot=yes\n";
+			$lines[] = "SetEnvIfNoCase Referer darodar.com spambot=yes\n";
+			$lines[] = "Order allow,deny\n";
+			$lines[] = "Allow from all\n";
+			$lines[] = "Deny from env=spambot\n";
+			$lines[] = "# Analytics Spam Blocker - End";
+			
+			$fp = fopen($home_path.'.htaccess', 'w');
+			foreach($lines as $line){
+				fwrite($fp, "$line");
 			}
+			fclose($fp);
+		} else {
+			// New File
+			$fp = fopen($home_path.'.htaccess','w');
+			fwrite($fp, "# Analytics Spam Blocker - Start\n");
+			fwrite($fp,"SetEnvIfNoCase Referer semalt.com spambot=yes\n");
+			fwrite($fp,"SetEnvIfNoCase Referer darodar.com spambot=yes\n");
+			fwrite($fp,"Order allow,deny\n");
+			fwrite($fp,"Allow from all\n");
+			fwrite($fp,"Deny from env=spambot\n");
+			fwrite($fp, "# Analytics Spam Blocker - End");
+			fclose($fp);
 		}
-
-
-		static function enable () {
-			include_once ( ABSPATH . '/wp-admin/includes/misc.php' );
-			$htaccess_file =  ABSPATH . '.htaccess';
-
-			$version = analytics_spam_blocker_plugin_version();
-			add_option(ANALYTICS_SPAM_BLOCKER_VERSION_KEY, $version);
-
-			$rules = "RewriteEngine on\n";
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*semalt\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.semalt.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*buttons-for-website\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.buttons-for-website.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*buttons-for-your-website\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.buttons-for-your-website.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*best-seo-solution\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.best-seo-solution.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*best-seo-offer\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.best-seo-offer.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*forum.topic31342700.darodar\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.forum.topic31342700.darodar.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*forum.topic61936458.darodar\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.forum.topic61936458.darodar.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*darodar\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.darodar.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*anticrawler\.org [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.anticrawler.org [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*googlsucks\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.googlsucks.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*make-money-online.7makemoneyonline\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.make-money-online.7makemoneyonline.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*7makemoneyonline\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.7makemoneyonline.com [R=301,L]\n";
-            
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*social-buttons\.com [NC]\n";
-			$rules .= "RewriteRule (.*) http://www.social-buttons.com [R=301,L]\n";
-            
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*youporn-forum\.ga [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.youporn-forum.ga [R=301,L]\n";
-
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*domination\.ml [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.domination.ml [R=301,L]\n";
-
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*get-free-traffic-now\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.get-free-traffic-now.com [R=301,L]\n";
-
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*domination\.ml [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.domination.ml [R=301,L]\n";
-
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*pornhub-forum\.ga [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.pornhub-forum.ga [R=301,L]\n";
-
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*depositfiles-porn\.ga [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.depositfiles-porn.ga [R=301,L]\n";
-
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*rapidgator-porn\.ga [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.rapidgator-porn.ga [R=301,L]\n";
-
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*buy-cheap-online\.info [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.buy-cheap-online.info [R=301,L]\n";
-
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*generalporn\.org [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.generalporn.org [R=301,L]\n";
-
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*search.tb.ask\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.search.tb.ask.com [R=301,L]\n";
-
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*gotovim-doma\.ru [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.gotovim-doma.ru [R=301,L]\n";
-
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*depositfiles-porn\.ga [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.depositfiles-porn.ga [R=301,L]\n";
-
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*pornhubforum\.tk [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.pornhubforum.tk [R=301,L]\n";
-
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*editors.choice61797376.hulfingtonpost\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.editors.choice61797376.hulfingtonpost.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*editors.choice61936458.hulfingtonpost\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.editors.choice61936458.hulfingtonpost.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*editors.choice23400164.hulfingtonpost\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.editors.choice23400164.hulfingtonpost.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*hulfingtonpost\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.hulfingtonpost.com [R=301,L]\n";
-			
-			//Update 2.2 - 29/04/2015 [Start]
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*torture\.ml [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.torture.ml [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*pornhub-forum.uni\.me [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.pornhub-forum.uni.me [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*free-share-buttons\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.free-share-buttons.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*windowssearch\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.windowssearch.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*theguardlan\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.theguardlan.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*supb\.ro [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.supb.ro [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*econom\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.econom.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*ilovevitaly\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.ilovevitaly.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*ilovevitaly\.ru [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.ilovevitaly.ru [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*ilovevitaly\.biz [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.ilovevitaly.biz [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*ilovevitaly\.info [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.ilovevitaly.info [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*myftpupload\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.myftpupload.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*iskalko\.ru [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.iskalko.ru [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*lomb\.co [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.lomb.co [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*lombia\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.lombia.co [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*blackhatworth\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.blackhatworth.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*priceg\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.priceg.com [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*cenoval\.ru [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.cenoval.ru [R=301,L]\n";
-			
-			$rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*bestwebsitesawards\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.bestwebsitesawards.com [R=301,L]\n";
-			
-			//Update 2.2 - 29/04/2015 [End]
-
-            $rules .= "RewriteCond %{HTTP_REFERER} ^http://([^.]+\.)*editors.choice61675363.hulfingtonpost\.com [NC]\n";
-            $rules .= "RewriteRule (.*) http://www.editors.choice61675363.hulfingtonpost.com [R=301,L]";
-			//Last line entry never contains \n before the closing "
-			
-			$rules = explode ( "\n", $rules );
-			insert_with_markers( $htaccess_file, 'Analytics Spam Blocker', $rules );
-		}
-
-		static function disable () {
-			include_once ( ABSPATH . '/wp-admin/includes/misc.php' );
-			$htaccess_file =  ABSPATH . '.htaccess';
-
-			insert_with_markers ( $htaccess_file, 'Analytics Spam Blocker', '' );
-		}
+	} else {
+		// Not writable
+		wp_die(_e('Your .htaccess file or root WordPress directory is not writable'));
 	}
-
-	register_activation_hook ( __FILE__, array( 'AnalyticsSpamBlocker', 'enable' ) );
-	register_deactivation_hook ( __FILE__, array( 'AnalyticsSpamBlocker', 'disable' ) );
-	register_uninstall_hook(__FILE__, array('AnalyticsSpamBlocker', 'uninstall'));
-
-	add_action('init',  array('AnalyticsSpamBlocker', 'init'));
-
-	register_uninstall_hook(__DIR__ . '/uninstall.php', array());
-
-
-function analytics_spam_blocker_plugin_version() {
-  if(!function_exists('get_plugin_data')) {
-    require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+	
+	//Delete old 1.5 plugin area
+	if ( is_writable( $home_path.'.htaccess' ) ) {
+		$fileOld = file_get_contents($home_path.'.htaccess');
+		$fileOld = deleteOldText('# BEGIN Analytics Spam Blocker', '# END Analytics Spam Blocker', $fileOld);
+		
+		$fpOld = fopen($home_path.'.htaccess', 'w');
+		fwrite($fpOld, $fileOld);
+		fclose($fpOld);
+	} else {
+		// Not writable
+		wp_die(_e('Your .htaccess file is not writable or doesn\'t exist.'));
+	}
+}
+function deleteOldText($startOld, $endOld, $stringOld)
+{
+  $beginningPosOld = strpos($stringOld, $startOld);
+  $endPosOld = strpos($stringOld, $endOld);
+  if ($beginningPosOld === false || $endPosOld === false) {
+    return $stringOld;
   }
-  $plugin_data = get_plugin_data(__FILE__);
-  return $plugin_data['Version'];
+
+  $deleteOld = substr($stringOld, $beginningPosOld, ($endPosOld + strlen($endOld)) - $beginningPosOld);
+
+  return str_replace($deleteOld, '', $stringOld);
 }
 
+function AnalyticsSpamBlockerDeactivate()
+{
+	$home_path = get_home_path();
+	$parsed_url = parse_url(site_url());
+	if ( is_writable( $home_path.'.htaccess' ) ) {
+		// We can make our changes
+		$file = file_get_contents($home_path.'.htaccess');
+		$file = DeleteCurrentCode('# Analytics Spam Blocker - Start', '# Analytics Spam Blocker - End', $file);
+		
+		$fp = fopen($home_path.'.htaccess', 'w');
+		fwrite($fp, $file);
+		fclose($fp);
+	} else {
+		// Not writable
+		wp_die(_e('Your .htaccess file is not writable or doesn\'t exist.'));
+	}
+}
 
-endif;
+function DeleteCurrentCode($start, $end, $string)
+{
+  $beginningPos = strpos($string, $start);
+  $endPos = strpos($string, $end);
+  if ($beginningPos === false || $endPos === false) {
+    return $string;
+  }
 
+  $delete = substr($string, $beginningPos, ($endPos + strlen($end)) - $beginningPos);
 
+  return str_replace($delete, '', $string);
+}

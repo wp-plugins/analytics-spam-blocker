@@ -4,7 +4,7 @@ Tags: analytics spam, analytics, spam, analytics block, block google spam, googl
 Donate link: http://lukewilliamson.com.au
 Requires at least: 1.0
 Tested up to: 4.2
-Stable tag: 1.5
+Stable tag: 1.6
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,8 +14,6 @@ This plugin blocks spam sites like semalt.com and buttons-for-website.com from r
 For any website and/or business owner, having Google Analytics is a vital tool to track your website's data.
 Unfortunately there's spam bots from websites like semalt.com that bounce off your website and give you false records in your Google Analytics.
 This plugin redirects those spam bots from ever reaching your website and unharming your Google Analytics data.
-
-Please deactivate this plugin before removing it from your website (otherwise your .htaccess won't update)
 
 == Installation ==
 1. Upload the `analytics-spam-blocker` plugin folder to the `/wp-content/plugins/` directory
