@@ -2,7 +2,7 @@
 /*
 Plugin Name: Analytics Spam Blocker
 Description: This plugin blocks spam sites like semalt.com and buttons-for-website.com from reaching your website and affecting your Google Analytics statistics.
-Version: 1.7.1
+Version: 1.8.0
 Author: Luke Williamson
 Author URI: http://lukewilliamson.com.au
 License: GPLv2
