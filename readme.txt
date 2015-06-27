@@ -24,6 +24,8 @@ Temporarily you will have to deactivate and reactivate the plugin every time you
 2. Activate the plugin through the \'Plugins\' menu in WordPress
 3. That's it!
 
+Note: Temporarily you will have to deactivate and reactivate the plugin every time you update the plugin - this message will disappear once it's resolved.
+
 == Frequently Asked Questions ==
 = How does this work? =
 With the constantly updating spam list, we are able to filter out the majority of these spam bots by marking them as spam in to your .htaccess file which prevents the spam bots from ever reaching your website.
