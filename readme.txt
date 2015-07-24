@@ -1,7 +1,7 @@
 === Analytics Spam Blocker ===
 Contributors: Luke Williamson
 Tags: analytics spam, analytics, spam, analytics block, block google spam, google spam
-Donate link: http://lukewilliamson.com.au
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5NC3SY53TKXUE
 Requires at least: 1.0
 Tested up to: 4.2
 Stable tag: 1.8.0
@@ -21,7 +21,7 @@ Temporarily you will have to deactivate and reactivate the plugin every time you
 
 == Installation ==
 1. Upload the `analytics-spam-blocker` plugin folder to the `/wp-content/plugins/` directory
-2. Activate the plugin through the \'Plugins\' menu in WordPress
+2. Activate the plugin through the 'Plugins' menu in WordPress
 3. That's it!
 
 Note: Temporarily you will have to deactivate and reactivate the plugin every time you update the plugin - this message will disappear once it's resolved.
